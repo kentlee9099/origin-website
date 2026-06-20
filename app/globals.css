@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --by-bg: #080808; --by-bg-alt: #0D0D0D; --by-surface: #111111; --by-raised: #181818;
+    --by-text: #EDE9E0;
+    --by-text-55: rgba(237,233,224,0.55); --by-text-28: rgba(237,233,224,0.28); --by-text-12: rgba(237,233,224,0.12);
+    --by-border: rgba(237,233,224,0.06); --by-border-h: rgba(237,233,224,0.14);
+    --by-blue: #3A5F8A; --by-blue-lt: #5C85B8;
+  }
+  html { background: var(--by-bg); color: var(--by-text); font-family: 'Inter','Helvetica Neue',Arial,sans-serif; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+  body { padding-bottom: 40px; }
+  .text-by-55 { color: var(--by-text-55); }
+  .text-by-28 { color: var(--by-text-28); }
+  .text-by-12 { color: var(--by-text-12); }
+  .border-by  { border-color: var(--by-border); }
+  [data-reveal] { opacity: 0; transform: translateY(24px); }
+  [data-reveal].revealed { animation: fadeUp 0.4s cubic-bezier(0.16,1,0.3,1) forwards; }
+  .gap-grid { display: grid; gap: 1px; background: var(--by-border); }
+  .gap-grid > * { background: var(--by-bg); }
+}
+
+@layer utilities {
+  .ease-expo  { transition-timing-function: cubic-bezier(0.16,1,0.3,1); }
+  .ease-sharp { transition-timing-function: cubic-bezier(0.2,0,0,1); }
+}
