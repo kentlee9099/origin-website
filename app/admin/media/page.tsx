@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { getAdminMedia } from '@/lib/data'
 
 export default async function MediaPage() {
-  const assets = await getAdminMedia()
+const assets = (await getAdminMedia()) as any[]
   return (
     <>
       <div className="flex items-center justify-between mb-6">
