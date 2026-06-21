@@ -32,7 +32,7 @@ export async function uploadImage(file: File, section: string, altText?: string)
 
   const { data: { publicUrl } } = db.storage.from(bucket).getPublicUrl(storagePath)
 
-  await db.from('media_assets').insert({
+  await createAdminClient().from('media_assets').insert({
     bucket, storage_path: storagePath, public_url: publicUrl,
     original_name: file.name, mime_type: 'image/webp',
     size_bytes: info.size, width: info.width, height: info.height,
@@ -46,6 +46,6 @@ export async function deleteImage(storagePath: string): Promise<void> {
   const bucket = storagePath.startsWith('avatars/') ? 'avatars' : 'images'
   await Promise.all([
     db.storage.from(bucket).remove([storagePath]),
-    db.from('media_assets').delete().eq('storage_path', storagePath),
+    createAdminClient().from('media_assets').delete().eq('storage_path', storagePath),
   ])
 }

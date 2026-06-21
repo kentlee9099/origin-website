@@ -12,14 +12,14 @@ const serviceSchema = z.object({
 })
 
 export async function GET() {
-  const { data, error } = await db.from('services').select('*').order('sort_order')
+  const { data, error } = await createAdminClient().from('services').select('*').order('sort_order')
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   return NextResponse.json(data)
 }
 export async function POST(req: NextRequest) {
   const parsed = serviceSchema.safeParse(await req.json())
   if (!parsed.success) return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 })
-  const { data, error } = await db.from('services').insert(parsed.data).select().single()
+  const { data, error } = await createAdminClient().from('services').insert(parsed.data).select().single()
   if (error) return NextResponse.json({ error: error.message }, { status: 400 })
   revalidateTag('services'); return NextResponse.json(data, { status: 201 })
 }
@@ -27,13 +27,13 @@ export async function PUT(req: NextRequest) {
   const { id, ...body } = await req.json()
   const parsed = serviceSchema.partial().safeParse(body)
   if (!parsed.success) return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 })
-  const { data, error } = await db.from('services').update(parsed.data).eq('id', id).select().single()
+  const { data, error } = await createAdminClient().from('services').update(parsed.data).eq('id', id).select().single()
   if (error) return NextResponse.json({ error: error.message }, { status: 400 })
   revalidateTag('services'); return NextResponse.json(data)
 }
 export async function DELETE(req: NextRequest) {
   const { id } = await req.json()
-  const { error } = await db.from('services').delete().eq('id', id)
+  const { error } = await createAdminClient().from('services').delete().eq('id', id)
   if (error) return NextResponse.json({ error: error.message }, { status: 400 })
   revalidateTag('services'); return NextResponse.json({ success: true })
 }
