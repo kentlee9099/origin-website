@@ -1,9 +1,19 @@
-export const metadata = { title: 'ORIGIN CMS Admin' }
+import type { Metadata } from 'next'
+import './globals.css'
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export const metadata: Metadata = {
+  title: 'ORIGIN',
+  description: '连接中国与中亚的贸易桥梁',
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-100">
-      <main className="max-w-6xl mx-auto px-6 py-8">{children}</main>
-    </div>
+    <html lang="zh">
+      <body>{children}</body>
+    </html>
   )
 }
